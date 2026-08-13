@@ -1,6 +1,3 @@
-!pip uninstall youtube-dl -y
-!pip install yt-dlp
-
 import html
 import re
 from datetime import datetime, timedelta, timezone
