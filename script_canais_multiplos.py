@@ -240,7 +240,16 @@ if __name__ == "__main__":
         ("Invest News", "https://www.youtube.com/@InvestNewsBR"),
         ("Neo Feed", "https://www.youtube.com/@NeoFeedBrasil"),
         ("Infomoney", "https://www.youtube.com/@infomoney/videos"),
-        ("Valor Econômico", "https://www.youtube.com/valoreconomico/videos")
+        ("Valor Econômico", "https://www.youtube.com/valoreconomico/videos"),
+        ("Roxo", "https://www.youtube.com/@luizfernandoroxo/videos"),
+        ("Fausto Botelho", "https://www.youtube.com/@ChartsFB/videos"),
+        ("Bruno Corano", "https://www.youtube.com/@BrunoCorano/videos"),
+        ("Avenue", "https://www.youtube.com/@avenue_us/videos"),
+        ("Laatus", "https://www.youtube.com/@Laatusoficial/videos"),
+        ("Pepa Silveira", "https://www.youtube.com/@pepasilveira/videos"),
+        ("Alexandre Cabral", "https://www.youtube.com/@Cabral7e10/videos"),
+        ("Tiago Reis", "https://www.youtube.com/@TiagoReisYT/videos")
+       
 
     ]
 
