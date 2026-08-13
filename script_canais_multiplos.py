@@ -74,7 +74,7 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
-    <title>Bloomberg Terminal - Video Monitor</title>
+    <title> YouTube Monitor</title>
     <style>
         body {{ 
             font-family: 'Consolas', 'Courier New', monospace, Arial, sans-serif; 
@@ -183,8 +183,8 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
     </script>
 </head>
 <body>
-    <h2>Terminal Monitor - Últimos Vídeos</h2>
-    <div class="atualizacao">DATA DE ATUALIZAÇÃO: {agora}</div>
+    <h2>Monitor Videos YouTube</h2>
+    <div class="atualizacao">Atualizado em: {agora}</div>
 """
 
     for idx, (nome_canal, videos) in enumerate(dados_canais):
