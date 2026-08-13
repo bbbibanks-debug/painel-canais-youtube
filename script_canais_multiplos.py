@@ -1,7 +1,8 @@
 import html
 import re
+from datetime import datetime
+from yt_dlp import YoutubeDL
 from datetime import datetime, timedelta, timezone
-import yt_dlp
 
 def coletar_videos(nome_exato, canal_url, limite=10):
     canal_url = canal_url.rstrip("/")
@@ -11,28 +12,25 @@ def coletar_videos(nome_exato, canal_url, limite=10):
         else:
             canal_url = canal_url + "/videos"
     
-    # Nova configuração focada em contornar o bloqueio de bot em servidores em nuvem
     opts = {
         "quiet": True,
-        "extract_flat": "in_playlist",  # Força leitura rápida estruturada sem disparar captcha de bot
+        "extract_flat": True,
         "playlistend": limite,
         "no_warnings": True,
         "ignoreerrors": True,
         "nocheckcertificate": True,
         "extractor_args": {
             "youtube": {
-                "skip": ["dash", "hls"],  # Pula processamento pesado de mídia
-                "player_skip": ["js"],     # Ignora assinaturas javascript bloqueadas
+                "lang": ["pt"]
             }
         },
         "http_headers": {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-            "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         }
     }
     
     try:
-        with yt_dlp.YoutubeDL(opts) as ydl:
+        with YoutubeDL(opts) as ydl:
             playlist = ydl.extract_info(canal_url, download=False)
             
             videos = []
@@ -41,30 +39,26 @@ def coletar_videos(nome_exato, canal_url, limite=10):
                     if not item or not item.get("id"):
                         continue
                     
-                    video_id = str(item["id"])
-                    video_url = f"https://youtube.com{video_id}"
+                    # Captura estritamente o ID de 11 caracteres puro fornecido pelo extract_flat
+                    video_id = str(item["id"]).strip()
                     
-                    # Captura a data aproximada baseada na timestamp da listagem rápida
-                    dia_postagem = "Recente"
-                    if item.get("timestamp"):
-                        try:
-                            dia_postagem = datetime.fromtimestamp(item["timestamp"], tz=timezone.utc).strftime("%d/%m/%Y")
-                        except Exception:
-                            pass
-                    elif item.get("upload_date"):
+                    # GARANTIA ABSOLUTA DO FORMATO DO LINK:
+                    video_url = f"https://www.youtube.com/watch?v={video_id}"
+                    
+                    dia_postagem = "Não disponível"
+                    if item.get("upload_date"):
                         try:
                             dia_postagem = datetime.strptime(item["upload_date"], "%Y%m%d").strftime("%d/%m/%Y")
                         except Exception:
                             pass
                     
-                    # Tratamento adaptativo da descrição para manter o layout Bloomberg idêntico ao solicitado
-                    # Como o modo antifraude não entrega a descrição interna, espelhamos o título de forma limpa
-                    titulo_limpo = item.get("title", "Vídeo sem título")
-                    descricao_curta = f"Metadados adicionais protegidos. Assista ao conteúdo completo diretamente na plataforma através do link oficial."
+                    descricao = item.get("description", "Sem descrição disponível.")
+                    if len(descricao) > 150:
+                        descricao = descricao[:147] + "..."
                     
                     videos.append({
-                        "titulo": titulo_limpo,
-                        "descricao": descricao_curta,
+                        "titulo": item.get("title", "Vídeo sem título"),
+                        "descricao": descricao,
                         "horario": dia_postagem,
                         "url": video_url
                     })
@@ -202,15 +196,14 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
             <div id="conteudo-{idx}" class="tabela-conteudo">
                 <table>
                     <tr>
-                        <th style="width: 70%;">Título / Descrição</th>
-                        <th style="width: 15%;">Horário (Upload)</th>
+                        <th style="width: 85%;">Título / Descrição</th>
                         <th style="width: 15%;">Link</th>
                     </tr>"""
         
         if not videos:
             html_saida += """
                     <tr>
-                        <td colspan="3" style="text-align:center; color:#555;">Nenhum vídeo encontrado. Canal offline ou instável.</td>
+                        <td colspan="2" style="text-align:center; color:#555;">Nenhum vídeo encontrado. Canal offline ou instável.</td>
                     </tr>"""
         else:
             for v in videos:
@@ -220,7 +213,6 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
                             <strong style="color: #ffffff;">{html.escape(str(v['titulo']))}</strong>
                             <div class="desc-video">{html.escape(str(v['descricao']))}</div>
                         </td>
-                        <td style="color: #ff6600; font-weight: bold;">{v['horario']}</td>
                         <td><a href="{v['url']}" target="_blank">► ABRIR</a></td>
                     </tr>"""
                     
@@ -261,4 +253,3 @@ if __name__ == "__main__":
         
     gerar_html(resultados)
     print("\nArquivo atualizado gerado com sucesso: youtube_multicanais.html")
-
