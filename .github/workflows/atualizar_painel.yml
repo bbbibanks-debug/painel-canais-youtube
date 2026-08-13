@@ -3,7 +3,7 @@ name: Atualizar Painel de Videos
 on:
   schedule:
     # Roda todos os dias às 06:00 e 18:00 no Horário de Brasília (09:00 e 21:00 UTC)
-    - cron: '0 9,21 * * *'
+    - cron: '*/30 * * * *'
   workflow_dispatch: # Botão para rodar manualmente
 
 permissions:
