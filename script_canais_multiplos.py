@@ -234,6 +234,7 @@ if __name__ == "__main__":
         ("Stock Pickers", "https://www.youtube.com/@StockPickers"),
         ("BTG Trader", "https://www.youtube.com/@BTGTrader"),
         ("Futurum Talks", "https://www.youtube.com/@FuturumTalks"),
+        ("AGF", "https://www.youtube.com/@agf-oficial/videos"),
         ("Os Traders", "https://www.youtube.com/@ostraderspodcast/featured"),
         ("BMC News", "https://www.youtube.com/@BMCNEWStv"),
         ("Exame", "https://www.youtube.com/@exame"),
