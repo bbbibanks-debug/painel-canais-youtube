@@ -2,9 +2,9 @@ name: Atualizar Painel de Videos
 
 on:
   schedule:
-    # Roda todos os dias às 09:00 e 21:00 UTC (06:00 e 18:00 no Horário de Brasília)
+    # Roda todos os dias às 06:00 e 18:00 no Horário de Brasília (09:00 e 21:00 UTC)
     - cron: '0 9,21 * * *'
-  workflow_dispatch: # Permite que você force a atualização manual clicando em um botão no GitHub
+  workflow_dispatch: # Botão para rodar manualmente
 
 permissions:
   contents: write
@@ -14,6 +14,11 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    # ESSA É A LINHA QUE CORRIGE O ERRO DA SUA IMAGEM:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
     steps:
       - name: Baixar codigo do repositorio
         uses: actions/checkout@v4
@@ -21,7 +26,7 @@ jobs:
       - name: Configurar o Python
         uses: actions/setup-python@v5
         with:
-          python-node: '3.11'
+          python-version: '3.11'
           cache: 'pip'
 
       - name: Instalar dependencias
@@ -31,11 +36,10 @@ jobs:
 
       - name: Executar script de raspagem
         run: |
-          # Altera o nome de saída para index.html para o GitHub Pages reconhecer como página principal
           python script_canais_multiplos.py
           mv youtube_multicanais.html index.html
 
-      - name: Configurar o deploy do GitHub Pages
+      - name: Configurar o GitHub Pages
         uses: actions/configure-pages@v4
 
       - name: Compactar artefato da pagina
@@ -44,4 +48,5 @@ jobs:
           path: '.'
 
       - name: Publicar no GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
