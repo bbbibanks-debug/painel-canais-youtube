@@ -1,0 +1,47 @@
+name: Atualizar Painel de Videos
+
+on:
+  schedule:
+    # Roda todos os dias às 09:00 e 21:00 UTC (06:00 e 18:00 no Horário de Brasília)
+    - cron: '0 9,21 * * *'
+  workflow_dispatch: # Permite que você force a atualização manual clicando em um botão no GitHub
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar codigo do repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar o Python
+        uses: actions/setup-python@v5
+        with:
+          python-node: '3.11'
+          cache: 'pip'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Executar script de raspagem
+        run: |
+          # Altera o nome de saída para index.html para o GitHub Pages reconhecer como página principal
+          python script_canais_multiplos.py
+          mv youtube_multicanais.html index.html
+
+      - name: Configurar o deploy do GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Compactar artefato da pagina
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Publicar no GitHub Pages
+        uses: actions/deploy-pages@v4
