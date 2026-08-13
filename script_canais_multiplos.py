@@ -2,6 +2,7 @@ import html
 import re
 from datetime import datetime
 from yt_dlp import YoutubeDL
+from datetime import datetime, timedelta, timezone
 
 def coletar_videos(nome_exato, canal_url, limite=10):
     canal_url = canal_url.rstrip("/")
@@ -72,7 +73,7 @@ def coletar_videos(nome_exato, canal_url, limite=10):
         return nome_exato, []
 
 def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
-    agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    agora = datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y %H:%M:%S")
     
     html_saida = f"""<!DOCTYPE html>
 <html lang="pt-br">
