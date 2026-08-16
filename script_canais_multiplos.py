@@ -253,6 +253,7 @@ if __name__ == "__main__":
         ("Neo Feed", "https://www.youtube.com/@NeoFeedBrasil"),
         ("Infomoney", "https://www.youtube.com/@infomoney/videos"),
         ("Valor Econômico", "https://www.youtube.com/valoreconomico/videos"),
+        ("Curioso Mercado", "https://www.youtube.com/@curiosomercado"),
         ("Os Traders", "https://www.youtube.com/@ostraderspodcast/featured"),
         ("Futurum Talks", "https://www.youtube.com/@FuturumTalks"),
         ("Fernando Ulrich", "https://www.youtube.com/@FernandoUlrichCanal"),
