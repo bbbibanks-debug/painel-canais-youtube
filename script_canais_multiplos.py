@@ -233,6 +233,7 @@ if __name__ == "__main__":
         ("The Economist", "https://www.youtube.com/@TheEconomist"),
         ("Barron`s", "https://www.youtube.com/@Barrons"),
         ("Money Week", "https://www.youtube.com/@MoneyWeekVideos"),
+        ("The Atlantic", "https://www.youtube.com/@TheAtlantic"),
         ("Times Brasil", "https://www.youtube.com/@otimesbrasil"),
         ("CNN Money", "https://www.youtube.com/@cnnbrmoney/videos"),
         ("Banco Central do Brasil", "https://www.youtube.com/@BancoCentralBR"),
