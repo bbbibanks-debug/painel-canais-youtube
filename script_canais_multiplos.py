@@ -231,9 +231,12 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
 if __name__ == "__main__":
     CANAIS_MAPEADOS = [
         ("The Economist", "https://www.youtube.com/@TheEconomist"),
+        ("The Wall Street Journal", "https://www.youtube.com/@wsj"),
+        ("IBD", "https://www.youtube.com/@investorsbusinessdaily"),
         ("Barron`s", "https://www.youtube.com/@Barrons"),
         ("Money Week", "https://www.youtube.com/@MoneyWeekVideos"),
         ("The Atlantic", "https://www.youtube.com/@TheAtlantic"),
+        ("92NY", "https://www.youtube.com/@92ndStreetY"),
         ("Times Brasil", "https://www.youtube.com/@otimesbrasil"),
         ("CNN Money", "https://www.youtube.com/@cnnbrmoney/videos"),
         ("Banco Central do Brasil", "https://www.youtube.com/@BancoCentralBR"),
