@@ -230,7 +230,7 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
 
 if __name__ == "__main__":
     CANAIS_MAPEADOS = [
-
+        ("The Economist", "https://www.youtube.com/@TheEconomist"),
         ("Banco Central do Brasil", "https://www.youtube.com/@BancoCentralBR"),
         ("Federal Reserve", "https://www.youtube.com/@federalreserve"),
         ("ECB", "https://www.youtube.com/@ecbeuro"),
