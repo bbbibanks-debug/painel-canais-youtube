@@ -47,7 +47,7 @@ def coletar_videos(nome_exato, canal_url, categoria, limite=10):
                     video_id = str(item["id"]).strip()
                     
                     # GARANTIA ABSOLUTA DO FORMATO DO LINK:
-                    video_url = f"https://youtube.com{video_id}"
+                    video_url = f"https://www.youtube.com/watch?v={video_id}"
                     
                     dia_postagem = "Não disponível"
                     if item.get("upload_date"):
