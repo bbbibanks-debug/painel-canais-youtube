@@ -234,6 +234,7 @@ if __name__ == "__main__":
         ("The Wall Street Journal", "https://www.youtube.com/@wsj"),
         ("IBD", "https://www.youtube.com/@investorsbusinessdaily"),
         ("Barron`s", "https://www.youtube.com/@Barrons"),
+        ("Time", "https://www.youtube.com/@TIME"),
         ("Money Week", "https://www.youtube.com/@MoneyWeekVideos"),
         ("The Atlantic", "https://www.youtube.com/@TheAtlantic"),
         ("92NY", "https://www.youtube.com/@92ndStreetY"),
