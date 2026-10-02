@@ -4,7 +4,11 @@ from datetime import datetime
 from yt_dlp import YoutubeDL
 from datetime import datetime, timedelta, timezone
 
-def coletar_videos(nome_exato, canal_url, limite=10):
+def coletar_videos(nome_exato, canal_url, categoria, limite=10):
+    """
+    Acessa a URL do canal do YouTube e extrai os metadados dos vídeos recentes
+    utilizando a biblioteca yt_dlp de forma assíncrona/flat estruturada.
+    """
     canal_url = canal_url.rstrip("/")
     if not canal_url.endswith("/videos"):
         if canal_url.endswith("/featured"):
@@ -43,7 +47,7 @@ def coletar_videos(nome_exato, canal_url, limite=10):
                     video_id = str(item["id"]).strip()
                     
                     # GARANTIA ABSOLUTA DO FORMATO DO LINK:
-                    video_url = f"https://www.youtube.com/watch?v={video_id}"
+                    video_url = f"https://youtube.com{video_id}"
                     
                     dia_postagem = "Não disponível"
                     if item.get("upload_date"):
@@ -62,14 +66,23 @@ def coletar_videos(nome_exato, canal_url, limite=10):
                         "horario": dia_postagem,
                         "url": video_url
                     })
-            return nome_exato, videos
+            return nome_exato, videos, categoria
     except Exception as e:
         print(f"Erro ao coletar canal {nome_exato}: {e}")
-        return nome_exato, []
-
+        return nome_exato, [], categoria
 def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
+    """
+    Gera o dashboard em HTML com navegação estruturada por janelas/abas e
+    conteúdos em contêineres retráteis, mantendo o padrão visual escuro original.
+    """
     agora = datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y %H:%M:%S")
     
+    # Extrair categorias únicas mantendo a ordem de aparição para as abas
+    categorias_vistas = []
+    for _, _, cat in dados_canais:
+        if cat not in categorias_vistas:
+            categorias_vistas.append(cat)
+            
     html_saida = f"""<!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -94,6 +107,42 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
             font-size: 13px; 
             color: #888888; 
             margin-bottom: 20px; 
+        }}
+        .abas-container {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #45a29e;
+            padding-bottom: 5px;
+        }}
+        .aba-btn {{
+            background: #1a1a1a;
+            color: #45a29e;
+            border: 1px solid #45a29e;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-family: 'Consolas', monospace;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            border-radius: 3px 3px 0 0;
+            transition: all 0.2s ease;
+        }}
+        .aba-btn:hover {{
+            background: #262626;
+            color: #ff6600;
+        }}
+        .aba-btn.ativa {{
+            background: #45a29e;
+            color: #0b0c10;
+            border-bottom: 1px solid #45a29e;
+        }}
+        .janela-conteudo {{
+            display: none;
+        }}
+        .janela-conteudo.ativa {{
+            display: block;
         }}
         .canal-container {{ 
             margin-bottom: 10px; 
@@ -180,34 +229,64 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
                 botao.innerHTML = nomeCanal + ' <span>▲</span>';
             }}
         }}
+
+        function mudarAba(slugCategoria) {{
+            var janelas = document.getElementsByClassName('janela-conteudo');
+            for (var i = 0; i < janelas.length; i++) {{
+                janelas[i].classList.remove('ativa');
+            }}
+            var botoes = document.getElementsByClassName('aba-btn');
+            for (var i = 0; i < botoes.length; i++) {{
+                botoes[i].classList.remove('ativa');
+            }}
+            document.getElementById('janela-' + slugCategoria).classList.add('ativa');
+            document.getElementById('tab-' + slugCategoria).classList.add('ativa');
+        }}
     </script>
 </head>
 <body>
     <h2>Monitor Videos YouTube</h2>
     <div class="atualizacao">Atualizado em: {agora}</div>
+    <div class="abas-container">
 """
+    
+    for idx, cat in enumerate(categorias_vistas):
+        slug = re.sub(r'[^a-z0-9]', '', cat.lower())
+        classe_ativa = "ativa" if idx == 0 else ""
+        html_saida += f'        <button id="tab-{slug}" class="aba-btn {classe_ativa}" onclick="mudarAba(\'{slug}\')">{html.escape(cat)}</button>\n'
+        
+    html_saida += "    </div>\n"
 
-    for idx, (nome_canal, videos) in enumerate(dados_canais):
-        html_saida += f"""
+    for idx_cat, cat in enumerate(categorias_vistas):
+        slug = re.sub(r'[^a-z0-9]', '', cat.lower())
+        classe_ativa = "ativa" if idx_cat == 0 else ""
+        html_saida += f'    <div id="janela-{slug}" class="janela-conteudo {classe_ativa}">\n'
+        
+        for idx_canal, (nome_canal, videos, categoria_canal) in enumerate(dados_canais):
+            if categoria_canal != cat:
+                continue
+                
+            id_unico = f"{slug}-{idx_canal}"
+            html_saida += f"""
         <div class="canal-container">
-            <button id="btn-{idx}" class="btn-retratil" data-nome="{html.escape(nome_canal)}" onclick="alternarJanela({idx})">
+            <button id="btn-{id_unico}" class="btn-retratil" data-nome="{html.escape(nome_canal)}" onclick="alternarJanela('{id_unico}')">
                 {html.escape(nome_canal)} <span>▼</span>
             </button>
-            <div id="conteudo-{idx}" class="tabela-conteudo">
+            <div id="conteudo-{id_unico}" class="tabela-conteudo">
                 <table>
                     <tr>
                         <th style="width: 85%;">Título / Descrição</th>
                         <th style="width: 15%;">Link</th>
                     </tr>"""
-        
-        if not videos:
-            html_saida += """
+            
+            if not videos:
+                html_saida += """
                     <tr>
                         <td colspan="2" style="text-align:center; color:#555;">Nenhum vídeo encontrado. Canal offline ou instável.</td>
                     </tr>"""
-        else:
-            for v in videos:
-                html_saida += f"""
+            else:
+                for v in videos:
+                    html_saida += f"""
                     <tr>
                         <td>
                             <strong style="color: #ffffff;">{html.escape(str(v['titulo']))}</strong>
@@ -215,11 +294,13 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
                         </td>
                         <td><a href="{v['url']}" target="_blank">► ABRIR</a></td>
                     </tr>"""
-                    
-        html_saida += """
+                        
+            html_saida += """
                 </table>
             </div>
         </div>"""
+            
+        html_saida += "    </div>\n"
         
     html_saida += """
 </body>
@@ -227,104 +308,108 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
     
     with open(arquivo, "w", encoding="utf-8") as f:
         f.write(html_saida)
-
 if __name__ == "__main__":
     CANAIS_MAPEADOS = [
-        ("The Economist", "https://www.youtube.com/@TheEconomist"),
-        ("The Wall Street Journal", "https://www.youtube.com/@wsj"),
-        ("IBD", "https://www.youtube.com/@investorsbusinessdaily"),
-        ("Barron`s", "https://www.youtube.com/@Barrons"),
-        ("Time", "https://www.youtube.com/@TIME"),
-        ("Money Week", "https://www.youtube.com/@MoneyWeekVideos"),
-        ("The Atlantic", "https://www.youtube.com/@TheAtlantic"),
-        ("92NY", "https://www.youtube.com/@92ndStreetY"),
-        ("Times Brasil", "https://www.youtube.com/@otimesbrasil"),
-        ("CNN Money", "https://www.youtube.com/@cnnbrmoney/videos"),
-        ("Banco Central do Brasil", "https://www.youtube.com/@BancoCentralBR"),
-        ("Federal Reserve", "https://www.youtube.com/@federalreserve"),
-        ("ECB", "https://www.youtube.com/@ecbeuro"),
-        ("B3", "https://www.youtube.com/@bolsadobrasil"),
-        ("Febraban", "https://www.youtube.com/@FEBRABANOficial"),
-        ("Bloomberg", "https://www.youtube.com/@markets"),
-        ("Bloomberg Originals", "https://www.youtube.com/@business"),
-        ("BloombergTech", "https://www.youtube.com/@BloombergTech"),
-        ("BloombergPodcasts", "https://www.youtube.com/@BloombergPodcasts"),
-        ("CNBCInternationalLive", "https://www.youtube.com/@CNBCInternationalLive"),
-        ("CNBCi", "https://www.youtube.com/@CNBCi"),
-        ("CNBCtelevision", "https://www.youtube.com/@CNBCtelevision"),
-        ("NBCNews", "https://www.youtube.com/@NBCNews"),
-        ("Associated Press", "https://www.youtube.com/@AssociatedPress"),
-        ("WSJ Opinion", "https://www.youtube.com/@WSJopinion"),
-        ("Reuters", "https://www.youtube.com/@Reuters"),
-        ("NYSE", "https://www.youtube.com/@NYSEofficial"),
-        ("Schwab Network", "https://www.youtube.com/@SchwabNetwork"),
-        ("Yahoo Finance", "https://www.youtube.com/@YahooFinance"),
-        ("Financial Times", "https://www.youtube.com/@FinancialTimes"),
-        ("Morningstar_Europe", "https://www.youtube.com/@Morningstar_Europe"),
-        ("Businessweek", "https://www.youtube.com/@businessweek"),
-        ("Forbes", "https://www.youtube.com/@Forbes"),
-        ("Fortune", "https://www.youtube.com/@fortune"),
-        ("Fortune", "https://www.youtube.com/@FoxBusiness"),   
-        ("The Spectator", "https://www.youtube.com/@SpectatorTV"),  
-        ("Financial Post", "https://www.youtube.com/@financialpost"),
-        ("MRT News", "https://www.youtube.com/@mrtnewsoficial"),
-        ("BrazilJournal", "https://www.youtube.com/@BrazilJournal"),
-        ("InvestNewsBR", "https://www.youtube.com/@InvestNewsBR"),
-        ("Capital Aberto", "https://www.youtube.com/@canalcapitalaberto"),
-        ("MarketWatch", "https://www.youtube.com/@MarketWatch"),
-        ("MoneyTimes", "https://www.youtube.com/@MoneyTimesBR"),
-        ("Safra", "https://www.youtube.com/@SafraBanco/videos"),
-        ("Bradesco", "https://www.youtube.com/@Bradesco/videos"),
-        ("Itaú", "https://www.youtube.com/@itaupersonnalite/videos"),
-        ("XP", "https://www.youtube.com/@XP_Oficial/videos"),
-        ("BTG Trader", "https://www.youtube.com/@BTGTrader"),
-        ("Empiricus", "https://www.youtube.com/@empiricus/videos"),
-        ("Kinea", "https://www.youtube.com/@KineaInvestimentos/videos"),
-        ("Nord", "https://www.youtube.com/@nordinvestimentos/videos"),
-        ("Suno", "https://www.youtube.com/@GrupoSuno/videos"),
-        ("Ágora", "https://www.youtube.com/@AgoraInvestimentos/videos"),
-        ("Avenue", "https://www.youtube.com/@avenue_us/videos"),
-        ("Market Makers", "https://www.youtube.com/@mmakers"),
-        ("Stock Pickers", "https://www.youtube.com/@StockPickers"),
-        ("Genial", "https://www.youtube.com/@genialinvestimentos"),
-        ("AGF", "https://www.youtube.com/@agf-oficial/videos"),
-        ("BMC News", "https://www.youtube.com/@BMCNEWStv"),
-        ("Exame", "https://www.youtube.com/@exame"),
-        ("Invest News", "https://www.youtube.com/@InvestNewsBR"),
-        ("Invest News", "https://www.youtube.com/@CanalMyNews"),
-        ("Neo Feed", "https://www.youtube.com/@NeoFeedBrasil"),
-        ("Infomoney", "https://www.youtube.com/@infomoney/videos"),
-        ("Valor Econômico", "https://www.youtube.com/valoreconomico/videos"),
-        ("Curioso Mercado", "https://www.youtube.com/@curiosomercado"),
-        ("Os Traders", "https://www.youtube.com/@ostraderspodcast/featured"),
-        ("Futurum Talks", "https://www.youtube.com/@FuturumTalks"),
-        ("Fernando Ulrich", "https://www.youtube.com/@FernandoUlrichCanal"),
-        ("Stormer", "https://www.youtube.com/@StormerOficial"),
-        ("Roxo", "https://www.youtube.com/@luizfernandoroxo/videos"),
-        ("Fausto Botelho", "https://www.youtube.com/@ChartsFB/videos"),
-        ("Andre Machado Ogro", "https://www.youtube.com/@ogrowallst/videos"),
-        ("Bruno Corano", "https://www.youtube.com/@BrunoCorano/videos"),
-        ("Mestre dos Derivativos", "https://www.youtube.com/@mestredosderivativos/videos"),
-        ("Laatus", "https://www.youtube.com/@Laatusoficial/videos"),
-        ("Pepa Silveira", "https://www.youtube.com/@pepasilveira/videos"),
-        ("Alexandre Cabral", "https://www.youtube.com/@Cabral7e10/videos"),
-        ("Tiago Reis", "https://www.youtube.com/@TiagoReisYT/videos"),
-        ("Arthurito Faria Lima", "https://www.youtube.com/@arthurito.farialima"),
-        ("Black Stone", "https://www.youtube.com/@blackstonegroup"),
-        ("Goldman Sachs", "https://www.youtube.com/@GoldmanSachs"),
-        ("Julius Baer Group", "https://www.youtube.com/@JuliusBaerGroup"),
-        ("Finaius", "https://www.youtube.com/@Finaius"),
-        ("LSE", "https://www.youtube.com/@theLondonSchoolofEconomics"),
-       
+        ("The Economist", "https://youtube.com", "Notícias e Revistas"),
+        ("The Wall Street Journal", "https://youtube.com", "Notícias e Revistas"),
+        ("The Atlantic", "https://youtube.com", "Notícias e Revistas"),
+        ("The Spectator", "https://youtube.com", "Notícias e Revistas"),
+        ("Forbes", "https://youtube.com", "Notícias e Revistas"),
+        ("Fortune", "https://youtube.com", "Notícias e Revistas"),
+        ("Businessweek", "https://youtube.com", "Notícias e Revistas"),
+        
+        ("Bloomberg", "https://youtube.com", "Agências e TV"),
+        ("Bloomberg Originals", "https://youtube.com", "Agências e TV"),
+        ("BloombergTech", "https://youtube.com", "Agências e TV"),
+        ("BloombergPodcasts", "https://youtube.com", "Agências e TV"),
+        ("CNBCInternationalLive", "https://youtube.com", "Agências e TV"),
+        ("CNBCi", "https://youtube.com", "Agências e TV"),
+        ("CNBCtelevision", "https://youtube.com", "Agências e TV"),
+        ("NBCNews", "https://youtube.com", "Agências e TV"),
+        ("Associated Press", "https://youtube.com", "Agências e TV"),
+        ("Reuters", "https://youtube.com", "Agências e TV"),
+        ("WSJ Opinion", "https://youtube.comopinion", "Agências e TV"),
 
+        ("Banco Central do Brasil", "https://youtube.com", "Instituições Oficiais"),
+        ("Federal Reserve", "https://youtube.com", "Instituições Oficiais"),
+        ("ECB", "https://youtube.com", "Instituições Oficiais"),
+        ("B3", "https://youtube.com", "Instituições Oficiais"),
+        ("Febraban", "https://youtube.com", "Instituições Oficiais"),
+        ("NYSE", "https://youtube.com", "Instituições Oficiais"),
+        ("LSE", "https://youtube.com", "Instituições Oficiais"),
+
+        ("Times Brasil", "https://youtube.com", "Cobertura Nacional BR"),
+        ("CNN Money", "https://youtube.com", "Cobertura Nacional BR"),
+        ("BrazilJournal", "https://youtube.com", "Cobertura Nacional BR"),
+        ("InvestNewsBR", "https://youtube.com", "Cobertura Nacional BR"),
+        ("Capital Aberto", "https://youtube.com", "Cobertura Nacional BR"),
+        ("MoneyTimes", "https://youtube.com", "Cobertura Nacional BR"),
+        ("BMC News", "https://youtube.com", "Cobertura Nacional BR"),
+        ("Exame", "https://youtube.com", "Cobertura Nacional BR"),
+        ("Neo Feed", "https://youtube.com", "Cobertura Nacional BR"),
+        ("Infomoney", "https://youtube.com", "Cobertura Nacional BR"),
+        ("Valor Econômico", "https://youtube.com", "Cobertura Nacional BR"),
+        ("Canal MyNews", "https://youtube.com", "Cobertura Nacional BR"),
+        ("MRT News", "https://youtube.com", "Cobertura Nacional BR"),
+
+        ("Safra", "https://youtube.com", "Bancos e Corretoras"),
+        ("Bradesco", "https://youtube.com", "Bancos e Corretoras"),
+        ("Itaú", "https://youtube.com", "Bancos e Corretoras"),
+        ("XP", "https://youtube.com", "Bancos e Corretoras"),
+        ("BTG Trader", "https://youtube.com", "Bancos e Corretoras"),
+        ("Genial", "https://youtube.com", "Bancos e Corretoras"),
+        ("Avenue", "https://youtube.com", "Bancos e Corretoras"),
+        ("Schwab Network", "https://youtube.com", "Bancos e Corretoras"),
+
+        ("Empiricus", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Kinea", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Nord", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Suno", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Ágora", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Market Makers", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Stock Pickers", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("AGF", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("IBD", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Barron`s", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Money Week", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Yahoo Finance", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Financial Times", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Morningstar_Europe", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("Financial Post", "https://youtube.com", "Casas de Análise e Mídia"),
+        ("MarketWatch", "https://youtube.com", "Casas de Análise e Mídia"),
+
+        ("Curioso Mercado", "https://youtube.com", "Traders e Criadores"),
+        ("Os Traders", "https://youtube.com", "Traders e Criadores"),
+        ("Futurum Talks", "https://youtube.com", "Traders e Criadores"),
+        ("Fernando Ulrich", "https://youtube.com", "Traders e Criadores"),
+        ("Stormer", "https://youtube.com", "Traders e Criadores"),
+        ("Roxo", "https://youtube.com", "Traders e Criadores"),
+        ("Fausto Botelho", "https://youtube.com", "Traders e Criadores"),
+        ("Andre Machado Ogro", "https://youtube.com", "Traders e Criadores"),
+        ("Bruno Corano", "https://youtube.com", "Traders e Criadores"),
+        ("Mestre dos Derivativos", "https://youtube.com", "Traders e Criadores"),
+        ("Laatus", "https://youtube.com", "Traders e Criadores"),
+        ("Pepa Silveira", "https://youtube.com", "Traders e Criadores"),
+        ("Alexandre Cabral", "https://youtube.com", "Traders e Criadores"),
+        ("Tiago Reis", "https://youtube.com", "Traders e Criadores"),
+        ("Arthurito Faria Lima", "https://youtube.com", "Traders e Criadores"),
+        
+        ("Black Stone", "https://youtube.com", "Gestoras Globais e Cultura"),
+        ("Goldman Sachs", "https://youtube.com", "Gestoras Globais e Cultura"),
+        ("Julius Baer Group", "https://youtube.com", "Gestoras Globais e Cultura"),
+        ("Finaius", "https://youtube.com", "Gestoras Globais e Cultura"),
+        ("92NY", "https://youtube.com", "Gestoras Globais e Cultura"),
     ]
 
-    
     resultados = []
-    for nome_exato, url in CANAIS_MAPEADOS:
-        print(f"Coletando dados de: {nome_exato}...")
-        nome, lista_videos = coletar_videos(nome_exato, url, limite=10)
-        resultados.append((nome, lista_videos))
+    for item in CANAIS_MAPEADOS:
+        nome_exato = item[0]
+        url = item[1]
+        categoria = item[2] if len(item) > 2 else "Geral"
+        
+        print(f"Coletando dados de: {nome_exato} [{categoria}]...")
+        nome, lista_videos, cat_retornada = coletar_videos(nome_exato, url, categoria, limite=10)
+        resultados.append((nome, lista_videos, cat_retornada))
         
     gerar_html(resultados)
     print("\nArquivo atualizado gerado com sucesso: youtube_multicanais.html")
