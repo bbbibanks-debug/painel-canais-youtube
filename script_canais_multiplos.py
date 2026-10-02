@@ -309,8 +309,7 @@ def gerar_html(dados_canais, arquivo="youtube_multicanais.html"):
     with open(arquivo, "w", encoding="utf-8") as f:
         f.write(html_saida)
 if __name__ == "__main__":
- 
-CANAIS_MAPEADOS = [
+    CANAIS_MAPEADOS = [
     ("The Economist", "https://www.youtube.com/@TheEconomist", "Notícias e Revistas"),
     ("The Wall Street Journal", "https://www.youtube.com/@wsj", "Notícias e Revistas"),
     ("The Atlantic", "https://www.youtube.com/@TheAtlantic", "Notícias e Revistas"),
@@ -318,7 +317,6 @@ CANAIS_MAPEADOS = [
     ("Forbes", "https://www.youtube.com/@Forbes", "Notícias e Revistas"),
     ("Fortune", "https://www.youtube.com/@fortune", "Notícias e Revistas"),
     ("Businessweek", "https://www.youtube.com/@businessweek", "Notícias e Revistas"),
-
     ("Bloomberg", "https://www.youtube.com/@markets", "Agências e TV"),
     ("Bloomberg Originals", "https://www.youtube.com/@business", "Agências e TV"),
     ("BloombergTech", "https://www.youtube.com/@BloombergTech", "Agências e TV"),
@@ -330,7 +328,6 @@ CANAIS_MAPEADOS = [
     ("Associated Press", "https://www.youtube.com/@AssociatedPress", "Agências e TV"),
     ("Reuters", "https://www.youtube.com/@Reuters", "Agências e TV"),
     ("WSJ Opinion", "https://www.youtube.com/@WSJopinion", "Agências e TV"),
-
     ("Banco Central do Brasil", "https://www.youtube.com/@BancoCentralBR", "Instituições Oficiais"),
     ("Federal Reserve", "https://www.youtube.com/@federalreserve", "Instituições Oficiais"),
     ("ECB", "https://www.youtube.com/@ecbeuro", "Instituições Oficiais"),
@@ -338,7 +335,6 @@ CANAIS_MAPEADOS = [
     ("Febraban", "https://www.youtube.com/@FEBRABANOficial", "Instituições Oficiais"),
     ("NYSE", "https://www.youtube.com/@NYSEofficial", "Instituições Oficiais"),
     ("LSE", "https://www.youtube.com/@theLondonSchoolofEconomics", "Instituições Oficiais"),
-
     ("Times Brasil", "https://www.youtube.com/@otimesbrasil", "Cobertura Nacional BR"),
     ("CNN Money", "https://www.youtube.com/@cnnbrmoney/videos", "Cobertura Nacional BR"),
     ("BrazilJournal", "https://www.youtube.com/@BrazilJournal", "Cobertura Nacional BR"),
@@ -352,7 +348,6 @@ CANAIS_MAPEADOS = [
     ("Valor Econômico", "https://www.youtube.com/valoreconomico/videos", "Cobertura Nacional BR"),
     ("Canal MyNews", "https://www.youtube.com/@CanalMyNews", "Cobertura Nacional BR"),
     ("MRT News", "https://www.youtube.com/@mrtnewsoficial", "Cobertura Nacional BR"),
-
     ("Safra", "https://www.youtube.com/@SafraBanco/videos", "Bancos e Corretoras"),
     ("Bradesco", "https://www.youtube.com/@Bradesco/videos", "Bancos e Corretoras"),
     ("Itaú", "https://www.youtube.com/@itaupersonnalite/videos", "Bancos e Corretoras"),
@@ -361,7 +356,6 @@ CANAIS_MAPEADOS = [
     ("Genial", "https://www.youtube.com/@genialinvestimentos", "Bancos e Corretoras"),
     ("Avenue", "https://www.youtube.com/@avenue_us/videos", "Bancos e Corretoras"),
     ("Schwab Network", "https://www.youtube.com/@SchwabNetwork", "Bancos e Corretoras"),
-
     ("Empiricus", "https://www.youtube.com/@empiricus/videos", "Casas de Análise e Mídia"),
     ("Kinea", "https://www.youtube.com/@KineaInvestimentos/videos", "Casas de Análise e Mídia"),
     ("Nord", "https://www.youtube.com/@nordinvestimentos/videos", "Casas de Análise e Mídia"),
@@ -378,7 +372,6 @@ CANAIS_MAPEADOS = [
     ("Morningstar_Europe", "https://www.youtube.com/@Morningstar_Europe", "Casas de Análise e Mídia"),
     ("Financial Post", "https://www.youtube.com/@financialpost", "Casas de Análise e Mídia"),
     ("MarketWatch", "https://www.youtube.com/@MarketWatch", "Casas de Análise e Mídia"),
-
     ("Curioso Mercado", "https://www.youtube.com/@curiosomercado", "Traders e Criadores"),
     ("Os Traders", "https://www.youtube.com/@ostraderspodcast/featured", "Traders e Criadores"),
     ("Futurum Talks", "https://www.youtube.com/@FuturumTalks", "Traders e Criadores"),
@@ -394,7 +387,6 @@ CANAIS_MAPEADOS = [
     ("Alexandre Cabral", "https://www.youtube.com/@Cabral7e10/videos", "Traders e Criadores"),
     ("Tiago Reis", "https://www.youtube.com/@TiagoReisYT/videos", "Traders e Criadores"),
     ("Arthurito Faria Lima", "https://www.youtube.com/@arthurito.farialima", "Traders e Criadores"),
-
     ("Black Stone", "https://www.youtube.com/@blackstonegroup", "Gestoras Globais e Cultura"),
     ("Goldman Sachs", "https://www.youtube.com/@GoldmanSachs", "Gestoras Globais e Cultura"),
     ("Julius Baer Group", "https://www.youtube.com/@JuliusBaerGroup", "Gestoras Globais e Cultura"),
@@ -402,6 +394,7 @@ CANAIS_MAPEADOS = [
     ("92NY", "https://www.youtube.com/@92ndStreetY", "Gestoras Globais e Cultura"),
 ]
 
+    
     resultados = []
     for item in CANAIS_MAPEADOS:
         nome_exato = item[0]
