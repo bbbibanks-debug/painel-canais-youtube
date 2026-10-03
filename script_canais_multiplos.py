@@ -418,7 +418,7 @@ if __name__ == "__main__":
     ("EY", "https://www.youtube.com/@ernstyoung/videos", "Consultoria"),
     ("Deloitte", "https://www.youtube.com/@deloitte/videos", "Consultoria"),
     ("Deloitte Brasil", "https://www.youtube.com/@deloittebrasil/videos", "Consultoria"),
-    ("KPMG", "https://www.youtube.com/@kpmg/videos", "Consultoria"),
+    ("KPMG", "https://www.youtube.com/user/deloittevideo/custom/videos", "Consultoria"),
     ("KPMG Brasil", "https://www.youtube.com/@KPMGBrasil/videos", "Consultoria"),
     ("Boston Consulting Group", "https://www.youtube.com/@TheBostonConsultingGroup/videos", "Consultoria"),
     ("McKinsey & Company", "https://www.youtube.com/@McKinsey/videos", "Consultoria"),
