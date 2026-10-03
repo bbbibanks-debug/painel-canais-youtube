@@ -430,16 +430,8 @@ if __name__ == "__main__":
     ("Bain & Company", "https://www.youtube.com/@bainandcompany/videos", "Consultoria"),
     ("Oliver Wyman", "https://www.youtube.com/@oliverwyman/videos", "Consultoria"),
     ("Roland Berger", "https://www.youtube.com/@rolandberger/videos", "Consultoria"),
-    ("Blockworks Macro", "https://www.youtube.com/@BlockworksMacro", "Analistas"),
-    ("George Noble", "https://www.youtube.com/@GeorgeNoble", "Analistas"),
-    ("New Money", "https://www.youtube.com/@NewMoneyYouTube", "Analistas"),
-    ("Wealthion", "https://www.youtube.com/@Wealthion", "Analistas"),
-    ("The David Lin Report", "https://www.youtube.com/@TheDavidLinReport", "Analistas"),
-    ("Stansberry Research", "https://www.youtube.com/@StansberryResearch", "Analistas"),
-    ("The Real Eisman Playbook", "https://www.youtube.com/@TheRealEismanPlaybook", "Analistas"),
-    ("The Maverick of Wall Street", "https://www.youtube.com/@TheMaverickofWallStreet", "Analistas"),
-    ("MacroVoices Podcast", "https://www.youtube.com/@MacroVoices", "Analistas"),
-    ("Rebel Capitalist", "https://www.youtube.com/@RebelCapitalist", "Analistas"),
+    ("Steve Eisman", "https://www.youtube.com/@RealEismanPlaybook/videos", "Analistas"),
+
 
     
 ]
