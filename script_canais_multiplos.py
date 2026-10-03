@@ -415,6 +415,21 @@ if __name__ == "__main__":
     ("92NY", "https://www.youtube.com/@92ndStreetY", "Talk Show e Think Tanks"),
     ("Jimmy Kimel", "https://www.youtube.com/@JimmyKimmelLive/videos", "Talk Show e Think Tanks"),
     ("Mahattan Connection", "https://www.youtube.com/@manhattanconnection/videos", "Talk Show e Think Tanks"),
+    ("EY", "https://www.youtube.com/@ernstyoung/videos", "Consultoria"),
+    ("Deloitte", "https://www.youtube.com/@deloitte/videos", "Consultoria"),
+    ("Deloitte Brasil", "https://www.youtube.com/@deloittebrasil/videos", "Consultoria"),
+    ("KPMG", "https://www.youtube.com/@kpmg/videos", "Consultoria"),
+    ("KPMG Brasil", "https://www.youtube.com/@KPMGBrasil/videos", "Consultoria"),
+    ("Boston Consulting Group", "https://www.youtube.com/@TheBostonConsultingGroup/videos", "Consultoria"),
+    ("McKinsey & Company", "https://www.youtube.com/@McKinsey/videos", "Consultoria"),
+    ("McKinsey Brasil", "https://www.youtube.com/@mckinseycobr/videos", "Consultoria"),
+    ("PwC", "https://www.youtube.com/@PwC/videos", "Consultoria"),
+    ("PwC Brasil", "https://www.youtube.com/@PwCBrasil/videos", "Consultoria"),
+    ("Accenture", "https://www.youtube.com/@Accenture/videos", "Consultoria"),
+    ("Accenture Brasil", "https://www.youtube.com/@accenturebrasil/videos", "Consultoria"),
+    ("Bain & Company", "https://www.youtube.com/@bainandcompany/videos", "Consultoria"),
+    ("Oliver Wyman", "https://www.youtube.com/@oliverwyman/videos", "Consultoria"),
+    ("Roland Berger", "https://www.youtube.com/@rolandberger/videos", "Consultoria"),
 
     
 ]
