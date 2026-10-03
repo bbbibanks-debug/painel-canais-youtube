@@ -313,7 +313,7 @@ if __name__ == "__main__":
     ("The Economist", "https://www.youtube.com/@TheEconomist", "Notícias e Revistas"),
     ("TIME", "https://www.youtube.com/@TIME", "Notícias e Revistas"),
     ("The Wall Street Journal", "https://www.youtube.com/@wsj", "Notícias e Revistas"),
-    ("The Wall Street Journal", "https://www.youtube.com/@nytimes/videos", "Notícias e Revistas"),
+    ("The New York Times", "https://www.youtube.com/@nytimes/videos", "Notícias e Revistas"),
     ("The Atlantic", "https://www.youtube.com/@TheAtlantic", "Notícias e Revistas"),
     ("The Spectator", "https://www.youtube.com/@SpectatorTV", "Notícias e Revistas"),
     ("Forbes", "https://www.youtube.com/@Forbes", "Notícias e Revistas"),
@@ -345,6 +345,7 @@ if __name__ == "__main__":
     ("LSE", "https://www.youtube.com/@theLondonSchoolofEconomics", "Instituições Oficiais"),
     ("Times Brasil", "https://www.youtube.com/@otimesbrasil", "Cobertura Nacional BR"),
     ("CNN Money", "https://www.youtube.com/@cnnbrmoney/videos", "Cobertura Nacional BR"),
+    ("BBC Nacional", "https://www.youtube.com/@BBCNewsBrasil/videos", "Cobertura Nacional BR"),
     ("BrazilJournal", "https://www.youtube.com/@BrazilJournal", "Cobertura Nacional BR"),
     ("InvestNewsBR", "https://www.youtube.com/@InvestNewsBR", "Cobertura Nacional BR"),
     ("Capital Aberto", "https://www.youtube.com/@canalcapitalaberto", "Cobertura Nacional BR"),
@@ -412,6 +413,9 @@ if __name__ == "__main__":
     ("Finaius", "https://www.youtube.com/@Finaius", "Gestoras Globais e Cultura"),
     ("David Rubenstein", "https://www.youtube.com/@DavidRubenstein/videos", "Talk Show e Think Tanks"),
     ("92NY", "https://www.youtube.com/@92ndStreetY", "Talk Show e Think Tanks"),
+    ("Jimmy Kimel", "https://www.youtube.com/@JimmyKimmelLive/videos", "Talk Show e Think Tanks"),
+    ("Mahattan Connection", "https://www.youtube.com/@manhattanconnection/videos", "Talk Show e Think Tanks"),
+
     
 ]
 
