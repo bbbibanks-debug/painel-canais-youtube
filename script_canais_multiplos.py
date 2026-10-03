@@ -395,7 +395,7 @@ if __name__ == "__main__":
     ("Alexandre Cabral", "https://www.youtube.com/@Cabral7e10/videos", "Traders e Criadores"),
     ("Tiago Reis", "https://www.youtube.com/@TiagoReisYT/videos", "Traders e Criadores"),
     ("Arthurito Faria Lima", "https://www.youtube.com/@arthurito.farialima", "Traders e Criadores"),
-    ("Black Stone", "https://www.youtube.com/@blackrock/videos", "Gestoras Globais e Cultura"),
+    ("Black Rock", "https://www.youtube.com/@blackrock/videos", "Gestoras Globais e Cultura"),
     ("Vanguard", "https://www.youtube.com/@vanguard/videos", "Gestoras Globais e Cultura"),
     ("Fidelity", "https://www.youtube.com/@fidelityinvestments/videos", "Gestoras Globais e Cultura"),
     ("Goldman Sachs", "https://www.youtube.com/@GoldmanSachs", "Gestoras Globais e Cultura"),
