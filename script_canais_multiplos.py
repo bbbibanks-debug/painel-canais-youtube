@@ -318,6 +318,7 @@ if __name__ == "__main__":
     ("Forbes", "https://www.youtube.com/@Forbes", "Notícias e Revistas"),
     ("Fortune", "https://www.youtube.com/@fortune", "Notícias e Revistas"),
     ("Businessweek", "https://www.youtube.com/@businessweek", "Notícias e Revistas"),
+    ("Yahoo Finance", "https://www.youtube.com/@YahooFinance", "Agências e TV"),
     ("Bloomberg", "https://www.youtube.com/@markets", "Agências e TV"),
     ("Bloomberg Originals", "https://www.youtube.com/@business", "Agências e TV"),
     ("BloombergTech", "https://www.youtube.com/@BloombergTech", "Agências e TV"),
