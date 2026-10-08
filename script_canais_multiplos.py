@@ -316,10 +316,10 @@ if __name__ == "__main__":
     ("The New York Times", "https://www.youtube.com/@nytimes/videos", "Notícias e Revistas"),
     ("The Atlantic", "https://www.youtube.com/@TheAtlantic", "Notícias e Revistas"),
     ("The Spectator", "https://www.youtube.com/@SpectatorTV", "Notícias e Revistas"),
+    ("Fast Company", "https://www.youtube.com/@FastCompany/videos", "Notícias e Revistas"),
     ("Forbes", "https://www.youtube.com/@Forbes", "Notícias e Revistas"),
     ("Fortune", "https://www.youtube.com/@fortune", "Notícias e Revistas"),
     ("Businessweek", "https://www.youtube.com/@businessweek", "Notícias e Revistas"),
-    ("Yahoo Finance", "https://www.youtube.com/@YahooFinance", "Agências e TV"),
     ("Bloomberg", "https://www.youtube.com/@markets", "Agências e TV"),
     ("Bloomberg Originals", "https://www.youtube.com/@business", "Agências e TV"),
     ("Bloomberg Tech", "https://www.youtube.com/@BloombergTech", "Agências e TV"),
@@ -328,11 +328,11 @@ if __name__ == "__main__":
     ("CNBCi", "https://www.youtube.com/@CNBCi", "Agências e TV"),
     ("CNBC Television", "https://www.youtube.com/@CNBCtelevision", "Agências e TV"),
     ("NBC News", "https://www.youtube.com/@NBCNews", "Agências e TV"),
+    ("Yahoo Finance", "https://www.youtube.com/@YahooFinance", "Agências e TV"),
     ("Associated Press", "https://www.youtube.com/@AssociatedPress", "Agências e TV"),
     ("Reuters", "https://www.youtube.com/@Reuters", "Agências e TV"),
     ("WSJ Opinion", "https://www.youtube.com/@WSJopinion", "Agências e TV"),
     ("FMI", "https://www.youtube.com/@imf/videos", "Instituições Oficiais"),
-    ("World Bank", "https://www.youtube.com/@WorldBankGroup/videos", "Instituições Oficiais"),
     ("World Bank", "https://www.youtube.com/@WorldBankGroup/videos", "Instituições Oficiais"),
     ("BIS", "https://www.youtube.com/@bisbribiz/videos", "Instituições Oficiais"),
     ("IFC", "https://www.youtube.com/@IFC_org/videos", "Instituições Oficiais"),
@@ -376,7 +376,6 @@ if __name__ == "__main__":
     ("IBD", "https://www.youtube.com/@investorsbusinessdaily", "Casas de Análise e Mídia"),
     ("Barron`s", "https://www.youtube.com/@Barrons", "Casas de Análise e Mídia"),
     ("Money Week", "https://www.youtube.com/@MoneyWeekVideos", "Casas de Análise e Mídia"),
-    ("Yahoo Finance", "https://www.youtube.com/@YahooFinance", "Casas de Análise e Mídia"),
     ("Financial Times", "https://www.youtube.com/@FinancialTimes", "Casas de Análise e Mídia"),
     ("Morningstar_Europe", "https://www.youtube.com/@Morningstar_Europe", "Casas de Análise e Mídia"),
     ("Financial Post", "https://www.youtube.com/@financialpost", "Casas de Análise e Mídia"),
@@ -401,6 +400,7 @@ if __name__ == "__main__":
     ("Fidelity", "https://www.youtube.com/@fidelityinvestments/videos", "Gestoras Globais e Cultura"),
     ("Goldman Sachs", "https://www.youtube.com/@GoldmanSachs", "Gestoras Globais e Cultura"),
     ("JP Morgan", "https://www.youtube.com/@jpmorgan/videos", "Gestoras Globais e Cultura"),
+    ("Morgan Stanley", "https://www.youtube.com/@morganstanley/videos", "Gestoras Globais e Cultura"),
     ("PIMCO", "https://www.youtube.com/@pimco/videos", "Gestoras Globais e Cultura"),
     ("UBS", "https://www.youtube.com/@UBS/videos", "Gestoras Globais e Cultura"),
     ("Capital Group", "https://www.youtube.com/@CapitalGroup/videos", "Gestoras Globais e Cultura"),
@@ -414,6 +414,7 @@ if __name__ == "__main__":
     ("David Rubenstein", "https://www.youtube.com/@DavidRubenstein/videos", "Talk Show e Think Tanks"),
     ("92NY", "https://www.youtube.com/@92ndStreetY", "Talk Show e Think Tanks"),
     ("Jimmy Kimel", "https://www.youtube.com/@JimmyKimmelLive/videos", "Talk Show e Think Tanks"),
+    ("Axios", "https://www.youtube.com/@axios/videos", "Talk Show e Think Tanks"),
     ("Mahattan Connection", "https://www.youtube.com/@manhattanconnection/videos", "Talk Show e Think Tanks"),
     ("EY", "https://www.youtube.com/@ernstyoung/videos", "Consultoria"),
     ("Deloitte", "https://www.youtube.com/@deloitte/videos", "Consultoria"),
@@ -431,7 +432,9 @@ if __name__ == "__main__":
     ("Oliver Wyman", "https://www.youtube.com/@oliverwyman/videos", "Consultoria"),
     ("Roland Berger", "https://www.youtube.com/@rolandberger/videos", "Consultoria"),
     ("Steve Eisman", "https://www.youtube.com/@RealEismanPlaybook/videos", "Analistas"),
-
+    ("Ezra Klein", "https://www.youtube.com/@EzraKleinShow/videos", "Analistas"),
+    
+   
 
     
 ]
